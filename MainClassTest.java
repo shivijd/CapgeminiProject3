@@ -52,16 +52,29 @@ public class MainClassTest {
 	   wa.withdrawAmount(1, "7500725707",  new BigDecimal("50.000"));
    }
   @Test
-  public void testifAmountIsPresent()throws InvalidAmountPresentException,InvalidPhoneNumberException,InvalidNameException,MobileNumberAlreadyExistException
+  public void testifAmountIsPresentWithdrawDoneSuccessfully()throws InvalidAmountPresentException,InvalidPhoneNumberException,InvalidNameException,MobileNumberAlreadyExistException
   {
 	  wa.createAccount("shivi", "7500725707",new BigDecimal("233145.45") );
 	  wa.withdrawAmount(2, "7500725707", new BigDecimal("3744.54"));
 
   }
-//  @Test
-//  public void testifAmountGetTransferToWrongMobileNumber() throws InvalidPhoneNumberException, InvalidNameException, InvalidAmountPresentException, MobileNumberAlreadyExistException
-//  {
-//	 wa.createAccount("shivi", "7500725707", new BigDecimal("3744.54"));
-//	 wa.withdrawAmount(2, "9450033127",new BigDecimal("37.54") );
-//  }
+  @Test(expected=com.capgemini.payment.bean.Excep.InvalidPhoneNumberException.class)
+ public void testifAmountGetTransferToWrongMobileNumber() throws InvalidPhoneNumberException, InvalidNameException, InvalidAmountPresentException, MobileNumberAlreadyExistException
+ {
+	 wa.createAccount("shivi", "7500725707", new BigDecimal("3744.54"));
+	 wa.withdrawAmount(2, "9450033127",new BigDecimal("37.54") );
+  }
+  @Test(expected=com.capgemini.payment.bean.Excep.InvalidPhoneNumberException.class)
+  public void testifAmountTransferToWrongMobileNumber() throws InvalidPhoneNumberException, InvalidNameException, InvalidAmountPresentException, MobileNumberAlreadyExistException
+  {
+	wa.createAccount("shivi", "7500725707", new BigDecimal("3744.54"))  ;
+	wa.depositAmount(2, "9450033127", new BigDecimal("37.54"));
+  }
+  @Test
+  public void testifAmountIsPresentDepositDoneSuccessfully()throws InvalidAmountPresentException,InvalidPhoneNumberException,InvalidNameException,MobileNumberAlreadyExistException
+  {
+		wa.createAccount("shivi", "7500725707", new BigDecimal("3744.54"))  ;
+		wa.depositAmount(2, "7500725707", new BigDecimal("3744.54"));
+
+  }
 }
